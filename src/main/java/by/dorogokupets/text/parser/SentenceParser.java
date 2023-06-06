@@ -18,7 +18,7 @@ public class SentenceParser extends TextParser{
             }
         }
 
-        if (!sentenceComponent.getChildren().isEmpty()) {
+        if (!sentenceComponent.getComponents().isEmpty()) {
             return sentenceComponent;
         } else {
             return null;

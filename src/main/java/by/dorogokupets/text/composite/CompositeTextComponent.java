@@ -5,19 +5,19 @@ import java.util.List;
 
 public class CompositeTextComponent  implements TextComponent {
     private TextType type;
-    private List<TextComponent> children;
+    private List<TextComponent> components;
 
     public CompositeTextComponent(TextType type) {
         this.type = type;
-        this.children = new ArrayList<>();
+        this.components = new ArrayList<>();
     }
 
     public void addChild(TextComponent component) {
-        children.add(component);
+        components.add(component);
     }
 
     public void removeChild(TextComponent component) {
-        children.remove(component);
+        components.remove(component);
     }
 
     @Override
@@ -25,14 +25,14 @@ public class CompositeTextComponent  implements TextComponent {
         return type;
     }
 
-    public List<TextComponent> getChildren() {
-        return children;
+    public List<TextComponent> getComponents() {
+        return components;
     }
 
     @Override
     public String getText() {
         StringBuilder sb = new StringBuilder();
-        for (TextComponent child : children) {
+        for (TextComponent child : components) {
             sb.append(child.getText());
         }
         return sb.toString();
@@ -41,7 +41,7 @@ public class CompositeTextComponent  implements TextComponent {
     @Override
     public int countLettersInWord() {
         int count = 0;
-        for (TextComponent child : children) {
+        for (TextComponent child : components) {
             count += child.countLettersInWord();
         }
         return count;

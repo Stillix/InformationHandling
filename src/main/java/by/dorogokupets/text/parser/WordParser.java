@@ -17,7 +17,7 @@ public class WordParser extends TextParser{
             }
         }
 
-        if (!wordComponent.getChildren().isEmpty()) {
+        if (!wordComponent.getComponents().isEmpty()) {
             return wordComponent;
         } else {
             return null;

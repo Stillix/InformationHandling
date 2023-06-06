@@ -18,7 +18,7 @@ public class ParagraphParser extends TextParser{
             }
         }
 
-        if (!paragraphComponent.getChildren().isEmpty()) {
+        if (!paragraphComponent.getComponents().isEmpty()) {
             return paragraphComponent;
         } else {
             return null;
