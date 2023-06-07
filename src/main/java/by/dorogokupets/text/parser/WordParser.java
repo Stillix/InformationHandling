@@ -1,26 +1,29 @@
 package by.dorogokupets.text.parser;
 
-import by.dorogokupets.text.composite.CompositeTextComponent;
-import by.dorogokupets.text.composite.TextComponent;
+import by.dorogokupets.text.composite.Composite;
+import by.dorogokupets.text.composite.Component;
 import by.dorogokupets.text.composite.TextType;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class WordParser extends TextParser{
+public class WordParser extends DataParser {
+    static final Logger logger = LogManager.getLogger(WordParser.class);
+
     @Override
-    protected TextComponent handleRequest(String text) {
-        CompositeTextComponent wordComponent = new CompositeTextComponent(TextType.WORD);
-        TextParser letterParser = new LetterParser();
+    protected Component handleRequest(String text) {
+        Composite wordComponent = new Composite(TextType.WORD);
+        DataParser letterParser = new LetterParser();
 
         for (char c : text.toCharArray()) {
-            TextComponent letterComponent = letterParser.parse(Character.toString(c));
+            Component letterComponent = letterParser.parse(Character.toString(c));
             if (letterComponent != null) {
-                wordComponent.addChild(letterComponent);
+                wordComponent.addComponent(letterComponent);
+            } else {
+                logger.log(Level.WARN, "The letter is null");
             }
         }
-
-        if (!wordComponent.getComponents().isEmpty()) {
-            return wordComponent;
-        } else {
-            return null;
-        }
+        return wordComponent;
     }
 }
+

@@ -1,10 +1,14 @@
 package by.dorogokupets.text.composite;
 
 
-public interface TextComponent {
+import java.util.List;
+
+public interface Component {
     TextType getType();
 
     String getText();
+    List<Component> getComponents();
 
     int countLettersInWord();
+
 }

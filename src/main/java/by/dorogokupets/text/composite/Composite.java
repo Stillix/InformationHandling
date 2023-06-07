@@ -3,20 +3,20 @@ package by.dorogokupets.text.composite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompositeTextComponent  implements TextComponent {
+public class Composite implements Component {
     private TextType type;
-    private List<TextComponent> components;
+    private List<Component> components;
 
-    public CompositeTextComponent(TextType type) {
+    public Composite(TextType type) {
         this.type = type;
         this.components = new ArrayList<>();
     }
 
-    public void addChild(TextComponent component) {
+    public void addComponent(Component component) {
         components.add(component);
     }
 
-    public void removeChild(TextComponent component) {
+    public void removeComponent(Component component) {
         components.remove(component);
     }
 
@@ -25,15 +25,15 @@ public class CompositeTextComponent  implements TextComponent {
         return type;
     }
 
-    public List<TextComponent> getComponents() {
+    public List<Component> getComponents() {
         return components;
     }
 
     @Override
     public String getText() {
         StringBuilder sb = new StringBuilder();
-        for (TextComponent child : components) {
-            sb.append(child.getText());
+        for (Component component : components) {
+            sb.append(component.getText());
         }
         return sb.toString();
     }
@@ -41,7 +41,7 @@ public class CompositeTextComponent  implements TextComponent {
     @Override
     public int countLettersInWord() {
         int count = 0;
-        for (TextComponent child : components) {
+        for (Component child : components) {
             count += child.countLettersInWord();
         }
         return count;

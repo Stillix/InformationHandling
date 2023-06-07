@@ -1,27 +1,32 @@
 package by.dorogokupets.text.parser;
 
-import by.dorogokupets.text.composite.CompositeTextComponent;
-import by.dorogokupets.text.composite.TextComponent;
+import by.dorogokupets.text.composite.Composite;
+import by.dorogokupets.text.composite.Component;
 import by.dorogokupets.text.composite.TextType;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class SentenceParser extends TextParser{
+public class SentenceParser extends DataParser {
+    static final Logger logger = LogManager.getLogger(SentenceParser.class);
+    private static final String WORD_SPLIT = "\\s+";
+
     @Override
-    protected TextComponent handleRequest(String text) {
-        CompositeTextComponent sentenceComponent = new CompositeTextComponent(TextType.SENTENCE);
-        TextParser wordParser = new WordParser();
+    protected Component handleRequest(String text) {
+        Composite sentenceComponent = new Composite(TextType.SENTENCE);
+        DataParser wordParser = new WordParser();
 
-        String[] words = text.trim().split("\\s+");
+        String[] words = text.trim().split(WORD_SPLIT);
         for (String word : words) {
-            TextComponent wordComponent = wordParser.parse(word);
-            if (wordComponent != null) {
-                sentenceComponent.addChild(wordComponent);
+            Component wordComponent = wordParser.parse(word);
+            if (!word.isEmpty()) {
+                sentenceComponent.addComponent(wordComponent);
+            } else {
+                logger.log(Level.WARN, "The word is empty");
             }
         }
-
-        if (!sentenceComponent.getComponents().isEmpty()) {
-            return sentenceComponent;
-        } else {
-            return null;
-        }
+        return sentenceComponent;
     }
 }
+
+

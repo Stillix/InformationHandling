@@ -1,23 +1,32 @@
 package by.dorogokupets.text.parser;
 
+import by.dorogokupets.text.composite.Component;
+import by.dorogokupets.text.composite.Composite;
+import by.dorogokupets.text.composite.TextType;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import by.dorogokupets.text.composite.TextComponent;
 
-public abstract class TextParser {
+public class TextParser extends DataParser {
+    static final Logger logger = LogManager.getLogger(TextParser.class);
+    private static final String PARAGRAPH_SPLIT = "(\\t|\\s{4})";
 
-    private TextParser nextParser;
-
-    public void setNextParser(TextParser nextParser) {
-        this.nextParser = nextParser;
-    }
-
-    public TextComponent parse(String text) {
-        TextComponent component = handleRequest(text);
-        if (component == null && nextParser != null) {
-            return nextParser.parse(text);
+    @Override
+    protected Component handleRequest(String text) {
+        Composite textComponent = new Composite(TextType.TEXT);
+        DataParser paragraphParser = new ParagraphParser();
+        String[] paragraphs = text.split(PARAGRAPH_SPLIT);
+        for (String paragraph : paragraphs) {
+            paragraph = paragraph.trim();
+            Component paragraphComponent = paragraphParser.parse(paragraph);
+            if (!paragraph.isEmpty()) {
+                textComponent.addComponent(paragraphComponent);
+            } else {
+                logger.log(Level.WARN, "The paragraph is empty");
+            }
         }
-        return component;
+        return textComponent;
     }
-
-    protected abstract TextComponent handleRequest(String text);
 }
+

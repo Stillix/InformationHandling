@@ -1,10 +1,12 @@
 package by.dorogokupets.text.composite;
 
-public class LeafTextComponent implements TextComponent {
+import java.util.List;
+
+public class Leaf implements Component {
     private TextType type;
     private String text;
 
-    public LeafTextComponent(TextType type, String text) {
+    public Leaf(TextType type, String text) {
         this.type = type;
         this.text = text;
     }
@@ -17,6 +19,11 @@ public class LeafTextComponent implements TextComponent {
     @Override
     public String getText() {
         return text;
+    }
+
+    @Override
+    public List<Component> getComponents() {
+        return null;
     }
 
     @Override
