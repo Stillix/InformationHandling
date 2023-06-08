@@ -2,10 +2,8 @@ package by.dorogokupets.text.main;
 
 
 import by.dorogokupets.text.composite.Component;
-import by.dorogokupets.text.composite.Composite;
-import by.dorogokupets.text.composite.TextType;
 import by.dorogokupets.text.parser.*;
-import by.dorogokupets.text.reader.TextReader;
+import by.dorogokupets.text.reader.impl.TextReaderImpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,10 +24,10 @@ public class Main {
         sentenceParser.setNextParser(wordParser);
         wordParser.setNextParser(letterParser);
 
-        TextReader textReader = new TextReader();
+        TextReaderImpl textReaderImpl = new TextReaderImpl();
         String fileContent;
         try {
-            fileContent = textReader.readFile(filePath);
+            fileContent = textReaderImpl.readFile(filePath);
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());
             return;
@@ -48,7 +46,7 @@ public class Main {
 
         System.out.println("Sentences:");
         for (Component paragraph : paragraphs) {
-            List<Component> sentences =  paragraph.getComponents();
+            List<Component> sentences = paragraph.getComponents();
             for (Component sentence : sentences) {
                 System.out.println(sentence.getText());
             }
@@ -57,7 +55,7 @@ public class Main {
 
         System.out.println("Words:");
         for (Component paragraph : paragraphs) {
-            List<Component> sentences =  paragraph.getComponents();
+            List<Component> sentences = paragraph.getComponents();
             for (Component sentence : sentences) {
                 List<Component> words = sentence.getComponents();
                 for (Component word : words) {
@@ -66,19 +64,6 @@ public class Main {
             }
         }
 
-        // Вывод букв
-        System.out.println("Letters:");
-        for (Component paragraph : paragraphs) {
-            List<Component> sentences = paragraph.getComponents();
-            for (Component sentence : sentences) {
-                List<Component> words = sentence.getComponents();
-                for (Component word : words) {
-                    List<Component> letters = word.getComponents();
-                    for (Component letter : letters) {
-                        System.out.println(letter.getText());
-                    }
-                }
-            }
-        }
+
     }
 }
