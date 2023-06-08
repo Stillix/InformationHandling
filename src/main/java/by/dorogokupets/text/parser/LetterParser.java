@@ -5,7 +5,7 @@ import by.dorogokupets.text.composite.Leaf;
 import by.dorogokupets.text.composite.Component;
 import by.dorogokupets.text.composite.TextType;
 
-public class LetterParser extends DataParser {
+public class LetterParser extends AbstractDataParser {
     @Override
     protected Component handleRequest(String text) {
         if (text.length() == 1) {

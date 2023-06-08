@@ -3,11 +3,11 @@ package by.dorogokupets.text.parser;
 
 import by.dorogokupets.text.composite.Component;
 
-public abstract class DataParser {
+public abstract class AbstractDataParser {
 
-    private DataParser nextParser;
+    private AbstractDataParser nextParser;
 
-    public void setNextParser(DataParser nextParser) {
+    public void setNextParser(AbstractDataParser nextParser) {
         this.nextParser = nextParser;
     }
 

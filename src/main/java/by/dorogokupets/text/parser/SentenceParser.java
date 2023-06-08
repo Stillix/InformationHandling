@@ -7,14 +7,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class SentenceParser extends DataParser {
+public class SentenceParser extends AbstractDataParser {
     static final Logger logger = LogManager.getLogger(SentenceParser.class);
     private static final String WORD_SPLIT = "\\s+";
 
     @Override
     protected Component handleRequest(String text) {
         Composite sentenceComponent = new Composite(TextType.SENTENCE);
-        DataParser wordParser = new WordParser();
+        AbstractDataParser wordParser = new WordParser();
 
         String[] words = text.trim().split(WORD_SPLIT);
         for (String word : words) {

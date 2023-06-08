@@ -7,13 +7,13 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class WordParser extends DataParser {
+public class WordParser extends AbstractDataParser {
     static final Logger logger = LogManager.getLogger(WordParser.class);
 
     @Override
     protected Component handleRequest(String text) {
         Composite wordComponent = new Composite(TextType.WORD);
-        DataParser letterParser = new LetterParser();
+        AbstractDataParser letterParser = new LetterParser();
 
         for (char c : text.toCharArray()) {
             Component letterComponent = letterParser.parse(Character.toString(c));
