@@ -22,6 +22,7 @@ public class LetterParser extends AbstractDataParser {
     }
 
     private boolean isSymbol(char character) {
-        return character == ',' || character == '-' || character == '.' || character == '(' || character == ')' || character == ':' || character == '"'|| character == '!'|| character == '?';
+        String punctuationRegex = "[.,\\-():\"!?]";
+        return String.valueOf(character).matches(punctuationRegex);
     }
 }
