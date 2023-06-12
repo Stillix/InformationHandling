@@ -1,69 +1,32 @@
 package by.dorogokupets.text.main;
 
 
-import by.dorogokupets.text.composite.Component;
+import by.dorogokupets.text.composite.TextComponent;
+import by.dorogokupets.text.exception.TextException;
 import by.dorogokupets.text.parser.*;
+import by.dorogokupets.text.reader.TextReader;
 import by.dorogokupets.text.reader.impl.TextReaderImpl;
-
-import java.io.IOException;
-import java.util.List;
-
 
 public class Main {
     public static void main(String[] args) {
-        String filePath = "data_text/text.txt";
 
-        DataParser textParser = new TextParser();
-        DataParser paragraphParser = new ParagraphParser();
-        DataParser sentenceParser = new SentenceParser();
-        DataParser wordParser = new WordParser();
-        DataParser letterParser = new LetterParser();
+        ChainConfigurator chainConfigurator = new ChainConfigurator();
+        AbstractDataParser parser = chainConfigurator.configureParserChain();
 
-        textParser.setNextParser(paragraphParser);
-        paragraphParser.setNextParser(sentenceParser);
-        sentenceParser.setNextParser(wordParser);
-        wordParser.setNextParser(letterParser);
-
-        TextReaderImpl textReaderImpl = new TextReaderImpl();
-        String fileContent;
+        TextReader reader = new TextReaderImpl();
+        String text = null;
         try {
-            fileContent = textReaderImpl.readFile(filePath);
-        } catch (IOException e) {
-            System.out.println("Error reading the file: " + e.getMessage());
+            text = reader.readFile("data_text/text.txt");
+        } catch (TextException e) {
+            System.out.println("Failed to read the file: " + e.getMessage());
             return;
         }
-
-        Component textComponent = textParser.parse(fileContent);
-
-        System.out.println("Full Text:");
-        System.out.println(textComponent.getText());
-
-        System.out.println("Paragraphs:");
-        List<Component> paragraphs = textComponent.getComponents();
-        for (Component paragraph : paragraphs) {
-            System.out.println(paragraph.getText());
-        }
-
-        System.out.println("Sentences:");
-        for (Component paragraph : paragraphs) {
-            List<Component> sentences = paragraph.getComponents();
-            for (Component sentence : sentences) {
-                System.out.println(sentence.getText());
-            }
-        }
+        System.out.println(text);
 
 
-        System.out.println("Words:");
-        for (Component paragraph : paragraphs) {
-            List<Component> sentences = paragraph.getComponents();
-            for (Component sentence : sentences) {
-                List<Component> words = sentence.getComponents();
-                for (Component word : words) {
-                    System.out.println(word.getText());
-                }
-            }
-        }
-
+        TextComponent textComponent = parser.parse(text);
+        System.out.println(textComponent);
 
     }
+
 }

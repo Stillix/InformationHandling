@@ -1,7 +1,7 @@
 package by.dorogokupets.text.parser;
 
-import by.dorogokupets.text.composite.Composite;
-import by.dorogokupets.text.composite.Component;
+import by.dorogokupets.text.composite.TextComposite;
+import by.dorogokupets.text.composite.TextComponent;
 import by.dorogokupets.text.composite.TextType;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -12,13 +12,13 @@ public class ParagraphParser extends AbstractDataParser {
     private static final String SENTENCE_SPLIT = "(?<=[.!?\\.{3}])s";
 
     @Override
-    protected Component handleRequest(String text) {
-        Composite paragraphComponent = new Composite(TextType.PARAGRAPH);
+    public TextComponent handleRequest(String text) {
+        TextComposite paragraphComponent = new TextComposite(TextType.PARAGRAPH);
         AbstractDataParser sentenceParser = new SentenceParser();
         String[] sentences = text.split(SENTENCE_SPLIT);
         for (String sentence : sentences) {
             sentence = sentence.trim();
-            Component sentenceComponent = sentenceParser.parse(sentence);
+            TextComponent sentenceComponent = sentenceParser.parse(sentence);
             if (!sentence.isEmpty()) {
                 paragraphComponent.addComponent(sentenceComponent);
             } else {

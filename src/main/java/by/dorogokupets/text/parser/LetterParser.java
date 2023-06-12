@@ -1,17 +1,27 @@
 package by.dorogokupets.text.parser;
 
-import by.dorogokupets.text.composite.Composite;
-import by.dorogokupets.text.composite.Leaf;
-import by.dorogokupets.text.composite.Component;
+import by.dorogokupets.text.composite.TextComposite;
+import by.dorogokupets.text.composite.TextLeaf;
+import by.dorogokupets.text.composite.TextComponent;
 import by.dorogokupets.text.composite.TextType;
 
 public class LetterParser extends AbstractDataParser {
+
     @Override
-    protected Component handleRequest(String text) {
+    public TextComponent handleRequest(String text) {
         if (text.length() == 1) {
-            return new Leaf(TextType.LETTER, text);
+            char character = text.charAt(0);
+            if (isSymbol(character)) {
+                return new TextLeaf(TextType.SYMBOL, text);
+            } else {
+                return new TextLeaf(TextType.LETTER, text);
+            }
         } else {
-            return new Composite(TextType.LETTER);
+            return new TextComposite(TextType.LETTER);
         }
+    }
+
+    private boolean isSymbol(char character) {
+        return character == ',' || character == '-' || character == '.' || character == '(' || character == ')' || character == ':' || character == '"'|| character == '!'|| character == '?';
     }
 }

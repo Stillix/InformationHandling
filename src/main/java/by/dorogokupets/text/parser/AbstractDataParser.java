@@ -1,7 +1,7 @@
 package by.dorogokupets.text.parser;
 
 
-import by.dorogokupets.text.composite.Component;
+import by.dorogokupets.text.composite.TextComponent;
 
 public abstract class AbstractDataParser {
 
@@ -11,13 +11,13 @@ public abstract class AbstractDataParser {
         this.nextParser = nextParser;
     }
 
-    public Component parse(String text) {
-        Component component = handleRequest(text);
-        if (component == null && nextParser != null) {
+    public TextComponent parse(String text) {
+        TextComponent textComponent = handleRequest(text);
+        if (textComponent == null && nextParser != null) {
             return nextParser.parse(text);
         }
-        return component;
+        return textComponent;
     }
 
-    protected abstract Component handleRequest(String text);
+    public abstract TextComponent handleRequest(String text);
 }
