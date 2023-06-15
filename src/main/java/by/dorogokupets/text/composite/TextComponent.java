@@ -10,8 +10,4 @@ public interface TextComponent {
 
     List<TextComponent> getComponents();
 
-    List<String> findSentencesWithLongestWord();
-
-    int countSymbols();
-
 }

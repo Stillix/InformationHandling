@@ -62,38 +62,7 @@ public class TextComposite implements TextComponent {
         }
     }
 
-    @Override
-    public List<String> findSentencesWithLongestWord() {
-        List<String> sentences = new ArrayList<>();
-        int maxLength = 0;
 
-        for (TextComponent component : components) {
-            List<String> componentSentences = component.findSentencesWithLongestWord();
-            for (String sentence : componentSentences) {
-                int length = sentence.length();
-                if (length > maxLength) {
-                    maxLength = length;
-                    sentences.clear();
-                    sentences.add(sentence);
-                } else if (length == maxLength) {
-                    sentences.add(sentence);
-                }
-            }
-        }
-
-        return sentences;
-    }
-
-    @Override
-    public int countSymbols() {
-        int count = 0;
-
-        for (TextComponent component : components) {
-            count += component.countSymbols();
-        }
-
-        return count;
-    }
 
     @Override
     public String toString() {

@@ -29,37 +29,6 @@ public class TextLeaf implements TextComponent {
     }
 
     @Override
-    public List<String> findSentencesWithLongestWord() {
-        List<String> sentences = new ArrayList<>();
-        String[] words = getText().split("\\s+");
-
-        int maxLength = 0;
-        for (String word : words) {
-            int length = word.length();
-            if (length > maxLength) {
-                maxLength = length;
-                sentences.clear();
-                sentences.add(getText());
-            } else if (length == maxLength) {
-                sentences.add(getText());
-            }
-        }
-
-        return sentences;
-    }
-
-    @Override
-    public int countSymbols() {
-        int count = 0;
-
-        if (getType() == TextType.SYMBOL) {
-            count = 1;
-        }
-
-        return count;
-    }
-
-    @Override
     public String toString() {
         return text;
     }
